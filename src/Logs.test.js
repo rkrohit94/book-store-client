@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Logs from './Logs';
 
 import {expect} from 'chai'
 import {shallow} from 'enzyme';
@@ -13,13 +13,13 @@ describe.only('Book Edit', () => {
 
 
 it('Should render with out error', () => {  
-    const wrapper = shallow(<App  />)
+    const wrapper = shallow(<Logs  />)
     expect(wrapper).to.be.ok;
   })
 
 it('Should get the text from its component', () => {  
-    const wrapper = shallow(<App />)
-    expect(wrapper.find('.bookHeading').text()).to.include('Books Inventory');
+    const wrapper = shallow(<Logs />)
+    expect(wrapper.find('.bookHeading').text()).to.include('Audit Logs');
 })
 
 })

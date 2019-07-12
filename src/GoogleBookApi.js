@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Image,Container,Row,Col,Form,Card,Button,ListGroup,Modal} from 'react-bootstrap'
+import {Image,FormControl,Row,Col,Form,Card,Button,ListGroup,Modal} from 'react-bootstrap'
 import Book from './Book';
 
 
@@ -20,7 +20,6 @@ class BookEdit extends React.Component {
     }
 
     getData(){
-        console.log("price",this.input.value)
         axios.get("http://localhost:8080/books/api/"+this.input.value)
         .then(rsp => {
             // console.log(rsp.data)
@@ -37,29 +36,24 @@ class BookEdit extends React.Component {
 
       return (
         <div>
+            <Row>    
+            <Col  className="bookHeading">  <h1>Add Book </h1> </Col>  
+            </Row>
+
             <Row>
-              <Col>
-              <Form>
-                  <Col sm ="6">
-                  <Form.Group >
-                        <Form.Control type="String"  
-                            placeholder="Enter book name to search"
-                            ref={(n) => {this.input = n}}
-                         />
-                    </Form.Group>
-                  </Col>
-                    <Col sm="2">
+                  <Col >
+                    <Form inline style={{margin:'1em'}} >
+                    <FormControl  type="text" 
+                             ref={(n) => {this.input = n}}
+                            placeholder="Search"
+                            className="mr-sm-2" />
+                 
                       <Button variant="primary"  onClick={this.getData}>
                       search
                       </Button>
-                    </Col>
-                    
-                </Form>
-
-              </Col>
-               
-            </Row>
-             
+                      </Form> 
+                    </Col>                         
+            </Row>          
             <Row>
             {bookDiv}
             </Row>

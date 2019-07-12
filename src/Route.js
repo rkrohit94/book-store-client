@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import MyNav from './MyNav'
 import App from './App'
+import Logs from './Logs'
 // import {Image,Container,Row,Form,Card,Button,ListGroup,Modal} from 'react-bootstrap'
 import BookEdit from './BookEdit';
 import GoogleBookApi from './GoogleBookApi';
@@ -17,6 +18,7 @@ class Route extends Component {
 
     this.changeToEdit= this.changeToEdit.bind(this)
     this.changeToAdd= this.changeToAdd.bind(this)
+    this.changeToLogs = this.changeToLogs.bind(this)
   }
 
   changeToEdit(book){
@@ -27,6 +29,10 @@ class Route extends Component {
     this.setState({toggle:'add'})
   }
 
+  changeToLogs(){
+    this.setState({toggle:'logs'})
+  }
+
   render(){
 
     switch (this.state.toggle) {
@@ -34,7 +40,8 @@ class Route extends Component {
           return (
             <div>
               <MyNav />
-              <App changeToEdit={this.changeToEdit} changeToAdd ={this.changeToAdd}/>
+              <App changeToEdit={this.changeToEdit}
+               changeToAdd ={this.changeToAdd} changeToLogs={this.changeToLogs}/>
             </div>
           )
           break;
@@ -56,7 +63,15 @@ class Route extends Component {
                 </div>
             )
             break;  
-
+      
+        case 'logs':
+          return (
+              <div>
+              <MyNav />
+              <Logs />
+              </div>
+          )
+          break;  
       }  
   }
 }

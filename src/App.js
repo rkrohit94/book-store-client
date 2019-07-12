@@ -16,10 +16,10 @@ class App extends Component {
     this.changeToEdit= this.changeToEdit.bind(this)
     this.changeToAdd = this.changeToAdd.bind(this)
     this.searchBook = this.searchBook.bind(this)
+    this.changeToLogs = this.changeToLogs.bind(this)
   }
 
   searchBook(){
-    console.log(this.inputSearch.value)
     axios.get("http://localhost:8080/books/search/"+this.inputSearch.value)
     .then(rsp => {
         // console.log(rsp.data)
@@ -30,9 +30,15 @@ class App extends Component {
   changeToEdit(book){
     this.props.changeToEdit(book)
   }
+
   changeToAdd(){
     this.props.changeToAdd();
   }
+
+  changeToLogs(){
+    this.props.changeToLogs()
+  }
+
   componentWillMount(){
     axios.get("http://localhost:8080/books/")
     .then(rsp => {
@@ -51,6 +57,11 @@ class App extends Component {
             <Col>
               <Button variant="primary" style={{margin:'1em',textAlign:'right'}}  onClick={()=>this.changeToAdd()}>
                 Add Book
+              </Button>
+            </Col>
+            <Col>
+              <Button variant="primary" style={{margin:'1em',textAlign:'right'}}  onClick={()=>this.changeToLogs()}>
+                Audit Logs
               </Button>
             </Col>
             <Col>

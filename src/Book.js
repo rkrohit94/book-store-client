@@ -20,45 +20,41 @@ class Book extends Component {
 //   };
 
 changeToEdit(book){
-    console.log(book)
     this.props.changeToEdit(book)
     // this.handleShow(book)
 }
 
-deleteBook(id){
-    console.log(id)
-    axios.delete("http://localhost:8080/books/"+id)
+deleteBook(){
+    axios.delete("http://localhost:8080/books/"+this.props.book.id)
     .then(rsp => {
         // console.log(rsp.data)
         this.setState({bookList:rsp.data})
+        this.handleClose()
     })
 }
 
 handleClose() {
-    this.setState({ show: false });
+    this.setState({ show: false },()=>{
+      window.location.reload()
+    });
   }
 
-  handleShow(book) {
-    console.log(book)
+  handleShow() {
     this.setState({ show: true });
   }
 
- saveData(){
-     console.log(this.input.value)
- } 
 
   render() {
     let buttonDiv=""
-      console.log("inside book",this.props.view)
       if(this.props.view=="EditBook"){
           buttonDiv=
                 <div>
-                    <Button onClick={() =>this.changeToEdit(this.props.book)}>Edit</Button>
-                <Button onClick={() =>this.deleteBook(this.props.book.id)}>Delete</Button>
+                    <Button id="editButton" onClick={() =>this.changeToEdit(this.props.book)}>Edit</Button>
+                <Button id="deleteButton" onClick={() =>this.handleShow(this.props.book.id)}>Delete</Button>
                 </div>
                 
       }else{
-        buttonDiv=  <Button onClick={() =>this.changeToEdit(this.props.book)}>Add To Store</Button>
+        buttonDiv=  <Button id="addStoreButton" onClick={() =>this.changeToEdit(this.props.book)}>Add To Store</Button>
       }
     return (
       <div>
@@ -79,43 +75,22 @@ handleClose() {
             </Card.Body>
             </Card>
 
-            {/* <Modal show={this.state.show} onHide={this.handleClose}>
+            <Modal show={this.state.show} onHide={this.handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>{this.props.book.title}</Modal.Title>
+                <Modal.Title>Are you sure you want to delete: {this.props.book.title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>{this.props.book.description}
-                    <Form>
-                    <Form.Group >
-                        <Form.Label>Update Price</Form.Label>
-                        <Form.Control type="number"  
-                        defaultValue={this.props.book.price} 
-                        inputRef={(ref) => {this.inputPrice = ref}}
-                         />
-                    </Form.Group>
-                   
-                    <Form.Group >
-                        <Form.Label>Update Quantity</Form.Label>
-                        <Form.Control type="number"
-                         defaultValue={this.props.book.quantity}
-                         inputRef={(ref) => {this.inputQuantity = ref}}
-                          />
-                    </Form.Group>
-                    </Form>
                     </Modal.Body>       
             
             <Modal.Footer>
                 <Button variant="secondary" onClick={this.handleClose}>
-                Close
+                Cancel
                 </Button>
-                <Button variant="primary" type="submit" onClick={()=>{this.saveData()}}>
-                Save Changes
+                <Button variant="primary" type="submit" onClick={()=>{this.deleteBook()}}>
+                Delete
                 </Button>
             </Modal.Footer>
-            </Modal> */}
-
-
-            
-        
+            </Modal>
       </div>
     );
   }
